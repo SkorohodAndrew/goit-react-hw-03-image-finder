@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-// import { changeinput } from 'components/form/changeinput';
 
 export class Searchbar extends Component {
   state = {

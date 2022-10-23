@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Searchbar } from './Searchbar/Searchbar';
+import { ImageGallery } from './ImageGallery/ImageGallery';
 
 export class App extends Component {
   state = {
@@ -10,21 +11,21 @@ export class App extends Component {
     loading: false,
   };
 
-  // componentDidUpdate(prevProps, prevState) {
-  //   const prevName = prevState.name;
-  //   const nextName = this.state.name;
-  //   const { name, page } = this.state;
-  //   if (prevProps.name !== this.props.name) {
-  //     console.log(prevProps.name);
-  //     console.log(this.props.name);
-  //     this.handleChangeState();
-  //   }
-  //   if (prevName !== nextName) {
-  //     this.fetchPictures(name, page).then(response => {
-  //       this.setState({ images: response, page: page + 1, loading: false });
-  //     });
-  //   }
-  // }
+  componentDidUpdate(prevProps, prevState) {
+    const prevName = prevState.name;
+    const nextName = this.state.name;
+    const { name, page } = this.state;
+    if (prevProps.name !== this.props.name) {
+      console.log(prevProps.name);
+      console.log(this.props.name);
+      this.handleChangeState();
+    }
+    if (prevName !== nextName) {
+      this.fetchPictures(name, page).then(response => {
+        this.setState({ images: response, page: page + 1, loading: false });
+      });
+    }
+  }
 
   fetchPictures = async (name, page) => {
     try {
@@ -37,14 +38,15 @@ export class App extends Component {
   };
 
   handleChangeState = ({ name }) => {
-    this.setState({ name: name, page: 1, loading: true });
+    this.setState({ name: name, page: 2, loading: true });
   };
 
   render() {
     return (
-      <div>
+      <>
         <Searchbar onSubmit={this.handleChangeState} />
-      </div>
+        <ImageGallery images={this.state.images} />
+      </>
     );
   }
 }
