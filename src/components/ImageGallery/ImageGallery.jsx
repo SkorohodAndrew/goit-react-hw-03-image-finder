@@ -7,14 +7,12 @@ export const ImageGallery = ({ images }) => {
       {images.length > 0 &&
         images.map(({ id, webformatURL, largeImageURL, tag }) => {
           return (
-            <div>
-              <ImageGalleryItem
-                key={id}
-                image={webformatURL}
-                largeImg={largeImageURL}
-                name={tag}
-              />
-            </div>
+            <ImageGalleryItem
+              key={id}
+              image={webformatURL}
+              largeImg={largeImageURL}
+              name={tag}
+            />
           );
         })}
     </div>

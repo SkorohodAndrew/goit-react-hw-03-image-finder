@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { Searchbar } from './Searchbar/Searchbar';
 import { ImageGallery } from './ImageGallery/ImageGallery';
+import { Modal } from './Modal/Modal';
 
 export class App extends Component {
   state = {
@@ -9,6 +10,15 @@ export class App extends Component {
     page: 1,
     images: [],
     loading: false,
+    error: null,
+    // modal: false,
+    // modalContent: '',
+
+    showModal: false,
+    contentModal: {
+      urlLarge: '',
+      title: '',
+    },
   };
 
   componentDidUpdate(prevProps, prevState) {
@@ -41,11 +51,50 @@ export class App extends Component {
     this.setState({ name: name, page: 2, loading: true });
   };
 
+  // openModal(largeImageURL) {
+  //   this.setState({
+  //     modal: true,
+  //     modalContent: largeImageURL,
+  //   });
+  // }
+
+  openModal = contentModal => {
+    this.setState({
+      showModal: true,
+      contentModal,
+    });
+  };
+  // closeModal() {
+  //   this.setState({
+  //     modal: false,
+  //     modalContent: '',
+  //   });
+  // }
+
+  closeModal = () => {
+    this.setState({
+      showModal: false,
+      contentModal: {
+        urlLarge: '',
+        title: '',
+      },
+    });
+  };
+
   render() {
+    const { showModal, images } = this.state;
     return (
       <>
         <Searchbar onSubmit={this.handleChangeState} />
-        <ImageGallery images={this.state.images} />
+        <ImageGallery images={images} onClick={this.openModal} />
+        {/* {showModal && (
+          <Modal OnClose={this.closeModal}>
+            <img src={modalContent} alt="" />
+          </Modal>
+        )} */}
+        {showModal && (
+          <Modal onClose={this.closeModal} content={this.state.contentModal} />
+        )}
       </>
     );
   }
