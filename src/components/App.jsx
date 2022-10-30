@@ -67,6 +67,18 @@ export class App extends Component {
     });
   };
 
+  loadMoreBtn = () => {
+    const { name, page } = this.state;
+    this.setState({ loading: true });
+    this.fetchPictures(name, page).then(response => {
+      this.setState(prevState => ({
+        images: [...prevState.images, ...response],
+        page: prevState.page + 1,
+        loading: false,
+      }));
+    });
+  };
+
   render() {
     const { loading, modalShow, modalContent, images } = this.state;
     return (
@@ -84,7 +96,7 @@ export class App extends Component {
           </Modal>
         )}
         {loading && <Loader></Loader>}
-        <Button />
+        {images.length > 0 && <Button onClick={this.loadMoreBtn} />}
       </>
     );
   }
