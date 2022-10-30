@@ -1,46 +1,65 @@
-import React, { Component } from 'react';
+// import React, { Component } from 'react';
+// import { createPortal } from 'react-dom';
+// import { StyledModal, Overlay } from './modalStyled';
+
+// const modalRoot = document.querySelector('#modal-root');
+
+// export class Modal extends Component {
+//   componentDidMount() {
+//     window.addEventListener('keydown', this.handleChange);
+//   }
+
+//   componentDidUpdate() {
+//     window.removeEventListener('keydown', this.handleChange);
+//   }
+
+//   handleChange = ({ target, currentTarget, code }) => {
+//     if (target === currentTarget || code === 'Escape') {
+//       this.props.onClose();
+//     }
+//   };
+
+//   // closeModal = event => {
+//   //   if (event.code === 'Escape' || event.target === event.currentTarget) {
+//   //     this.props.onClose();
+//   //   }
+//   // };
+
+//   render() {
+//     return createPortal(
+//       <Overlay onClick={this.handleChange}>
+//         <StyledModal> {this.props.children}</StyledModal>
+//       </Overlay>,
+//       modalRoot
+//     );
+//   }
+// }
+
+import { Component } from 'react';
 import { createPortal } from 'react-dom';
 import { StyledModal, Overlay } from './modalStyled';
 
-const modalRoot = document.getElementById('root');
+const modalRoot = document.querySelector('#modal-root');
 
 export class Modal extends Component {
   componentDidMount() {
-    window.addEventListener('keydown', this.closeModal);
+    window.addEventListener('keydown', this.handleClose);
   }
 
-  componentDidUpdate() {
-    window.removeEventListener('keydown', this.closeModal);
+  componentWillUnmount() {
+    window.removeEventListener('keydown', this.handleClose);
   }
 
-  //   handleChange({ target, currentTarget, code }) {
-  //     if (target === currentTarget || code === `Escape`) {
-  //       this.props.onClose();
-  //     }
-  //   }
-
-  closeModal = event => {
-    if (event.code === 'Escape' || event.target === event.currentTarget) {
+  handleClose = ({ target, currentTarget, code }) => {
+    if (target === currentTarget || code === 'Escape') {
       this.props.onClose();
     }
   };
 
-  //   render() {
-  //     return createPortal(
-  //       <Overlay onClick={this.handleChange}>
-  //         <StyledModal />
-  //       </Overlay>,
-  //       modalRoot
-  //     );
-  //   }
-
   render() {
-    const { imageUrlLarge } = this.props.content;
     return createPortal(
-      <Overlay onClick={this.closeModal}>
-        <StyledModal>
-          <img src={imageUrlLarge} alt="" />
-        </StyledModal>
+      <Overlay onClick={this.handleClose}>
+        <StyledModal>{this.props.children}</StyledModal>
       </Overlay>,
       modalRoot
     );

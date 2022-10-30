@@ -1,9 +1,10 @@
 import React from 'react';
+import { ImageGalleryList, ImageGalleryImage } from './ImageGalleryItemStyled';
 
-export const ImageGalleryItem = ({ image, name, largeImg }) => {
+export const ImageGalleryItem = ({ image, largeImg, name, onClick }) => {
   return (
-    <li class="gallery-item">
-      <img src={image} alt={name} />
-    </li>
+    <ImageGalleryList onClick={() => onClick(largeImg)}>
+      <ImageGalleryImage src={image} alt={name} />
+    </ImageGalleryList>
   );
 };

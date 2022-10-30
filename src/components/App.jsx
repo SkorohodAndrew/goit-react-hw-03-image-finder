@@ -3,6 +3,8 @@ import axios from 'axios';
 import { Searchbar } from './Searchbar/Searchbar';
 import { ImageGallery } from './ImageGallery/ImageGallery';
 import { Modal } from './Modal/Modal';
+import { Loader } from './Loader/Loader';
+import { Button } from './Button/Button';
 
 export class App extends Component {
   state = {
@@ -11,14 +13,14 @@ export class App extends Component {
     images: [],
     loading: false,
     error: null,
-    // modal: false,
-    // modalContent: '',
+    modalShow: false,
+    modalContent: '',
 
-    showModal: false,
-    contentModal: {
-      urlLarge: '',
-      title: '',
-    },
+    // showModal: false,
+    // contentModal: {
+    //   urlLarge: '',
+    //   title: '',
+    // },
   };
 
   componentDidUpdate(prevProps, prevState) {
@@ -48,53 +50,41 @@ export class App extends Component {
   };
 
   handleChangeState = ({ name }) => {
-    this.setState({ name: name, page: 2, loading: true });
+    this.setState({ name: name, page: 1, loading: true });
   };
 
-  // openModal(largeImageURL) {
-  //   this.setState({
-  //     modal: true,
-  //     modalContent: largeImageURL,
-  //   });
-  // }
-
-  openModal = contentModal => {
+  openModal = largeImg => {
     this.setState({
-      showModal: true,
-      contentModal,
+      modalShow: true,
+      modalContent: largeImg,
     });
   };
-  // closeModal() {
-  //   this.setState({
-  //     modal: false,
-  //     modalContent: '',
-  //   });
-  // }
 
   closeModal = () => {
     this.setState({
-      showModal: false,
-      contentModal: {
-        urlLarge: '',
-        title: '',
-      },
+      modalShow: false,
+      modalContent: '',
     });
   };
 
   render() {
-    const { showModal, images } = this.state;
+    const { loading, modalShow, modalContent, images } = this.state;
     return (
       <>
         <Searchbar onSubmit={this.handleChangeState} />
         <ImageGallery images={images} onClick={this.openModal} />
-        {/* {showModal && (
+        {modalShow && (
           <Modal OnClose={this.closeModal}>
             <img src={modalContent} alt="" />
           </Modal>
-        )} */}
-        {showModal && (
-          <Modal onClose={this.closeModal} content={this.state.contentModal} />
         )}
+        {modalShow && (
+          <Modal onClose={this.closeModal}>
+            <img src={modalContent} alt="" />
+          </Modal>
+        )}
+        {loading && <Loader></Loader>}
+        <Button />
       </>
     );
   }
