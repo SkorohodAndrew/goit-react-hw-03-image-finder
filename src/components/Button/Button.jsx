@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 export const Button = ({ onClick }) => {
   return (
     <>
-      <ButtonLM onClick={() => onClick()}>Button</ButtonLM>
+      <ButtonLM onClick={() => onClick()}>Load more</ButtonLM>
     </>
   );
 };

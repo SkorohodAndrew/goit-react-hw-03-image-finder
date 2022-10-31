@@ -90,11 +90,11 @@ export class App extends Component {
             <img src={modalContent} alt="" />
           </Modal>
         )}
-        {modalShow && (
+        {/* {modalShow && (
           <Modal onClose={this.closeModal}>
             <img src={modalContent} alt="" />
           </Modal>
-        )}
+        )} */}
         {loading && <Loader></Loader>}
         {images.length > 0 && <Button onClick={this.loadMoreBtn} />}
       </>
